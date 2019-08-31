@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LifeStory Kids Books Photo Input App</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/5.4.1/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/5.4.1/firebase-auth.js"></script>
+    <!-- <script defer src="/__/firebase/5.4.1/firebase-database.js"></script> -->
+    <!-- <script defer src="/__/firebase/5.4.1/firebase-messaging.js"></script> -->
+    <script defer src="/__/firebase/5.4.1/firebase-storage.js"></script>
+
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+    <script defer src="https://cdn.firebase.com/libs/firebaseui/3.4.0/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.0/firebaseui.css" />
+
+    <script defer src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/master.css">
+    <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <script defer src="js/main.js" type="text/javascript"></script>
+
+  </head>
+  <body>
+      <header>
+          <div class="row outer-row text-center my-4">
+              <div class="col">
+                  <h2>LifeStory Kids Books</h2>
+                  <h4>Photo Input Page</h4>
+              </div>
+          </div>
+          <hr>
+
+      </header>
+
+      <!-- Modal -->
+      <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+                <p id="uploadStatus">Uploading photos...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="row outer-row text-center mx-1">
+          <div class="col-xl-3 col-sm-2 d-none d-sm-block">
+          </div>
+          <div class="col-xl-6 col-sm-8 col">
+              <p>Thanks for getting your kid their own Lifestory book! This page will guide you through taking the photos of your kid to make their book.</p>
+              <ul class="text-left">
+                  <li>Find spot with <strong>light that’s not too extreme</strong>. Inside at night is too dark, direct sunlight is too bright...other than that, you’re good. </li>
+                  <li>Try to not cut off parts of your kid. Having <strong>plenty of space</strong> around them is best.</li>
+                  <li>Optional prompts are included to get expressions. Sometimes they help, but <strong>you know your kid best</strong>.</li>
+                  <li><strong>The photos don’t have to be perfect!</strong> If your kid is loose and having fun, the photos will come out better than if they’re trying to hit an exact expression. <strong>Fun is more important than precision!</strong></li>
+              </ul>
+          </div>
+          <div class="col-xl-3 col-sm-2 d-none d-sm-block">
+          </div>
+      </div>
+      <hr>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4><em>Note: If you are using a smartphone, the "Choose File" buttons will open your device camera.</em></h4>
+              <hr>
+              <h4 class="lead heading">01. Back of the head</h4>
+              <img class="my-1" id="photoDisplay01" src="images/examplePhotos/examplePhoto01.png" alt="example photo #1" width="250px">
+              <input type="file" id="photoUpload01" accept="image/*" capture="camera" onchange="handleFiles(this.files, '01')"/>
+              <hr>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4 class="lead heading">02. Happy smiley kid</h4>
+              <p>“What do you look like when you get to read your favorite book?”</p>
+              <img class="my-1" id="photoDisplay02" src="images/examplePhotos/examplePhoto02.png" alt="example photo #2" width="250px">
+              <input type="file" id="photoUpload02" accept="image/*" capture="camera" onchange="handleFiles(this.files, '02')"/>
+              <hr>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4 class="lead heading">03. Happy Sleep</h4>
+              <p>“You’re having a dream that you’re a bird flying high in the sky.”</p>
+              <img class="my-1" id="photoDisplay03" src="images/examplePhotos/examplePhoto03.png" alt="example photo #3" width="250px">
+              <input type="file" id="photoUpload03" accept="image/*" capture="camera" onchange="handleFiles(this.files, '03')"/>
+              <hr>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4 class="lead heading">04. Sad Sleep</h4>
+              <p>"You’re sleeping your tiredest sleep ever."</p>
+              <img class="my-1" id="photoDisplay04" src="images/examplePhotos/examplePhoto04.png" alt="example photo #4" width="250px">
+              <input type="file" id="photoUpload04" accept="image/*" capture="camera" onchange="handleFiles(this.files, '04')"/>
+              <hr>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4 class="lead heading">05. Silly</h4>
+              <p>“Make your silliest face that would make your friends laugh.”</p>
+              <img class="my-1" id="photoDisplay05" src="images/examplePhotos/examplePhoto05.png" alt="example photo #5" width="250px">
+              <input type="file" id="photoUpload05" accept="image/*" capture="camera" onchange="handleFiles(this.files, '05')"/>
+              <hr>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4 class="lead heading">06. Glee!</h4>
+              <p>“Someone just gave you seventy million gallons of ice cream!”</p>
+              <img class="my-1" id="photoDisplay06" src="images/examplePhotos/examplePhoto06.png" alt="example photo #6" width="250px">
+              <input type="file" id="photoUpload06" accept="image/*" capture="camera" onchange="handleFiles(this.files, '06')"/>
+              <hr>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4 class="lead heading">07. Worried</h4>
+              <p>“You can’t find your favorite stuffed animal and you miss him/her.“</p>
+              <img class="my-1" id="photoDisplay07" src="images/examplePhotos/examplePhoto07.png" alt="example photo #7" width="250px">
+              <input type="file" id="photoUpload07" accept="image/*" capture="camera" onchange="handleFiles(this.files, '07')"/>
+              <hr>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4 class="lead heading">08. Sly Operator (45°)</h4>
+              <p>“You made a secret surprise for Mom/Dad and she’s about to discover it.”</p>
+              <img class="my-1" id="photoDisplay08" src="images/examplePhotos/examplePhoto08.png" alt="example photo #8" width="250px">
+              <input type="file" id="photoUpload08" accept="image/*" capture="camera" onchange="handleFiles(this.files, '08')" />
+              <hr>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4 class="lead heading">09. Falling...</h4>
+              <p>“You’re sliding down the biggest slide ever.”</p>
+              <img class="my-1" id="photoDisplay09" src="images/examplePhotos/examplePhoto09.png" alt="example photo #9" width="250px">
+              <input type="file" id="photoUpload09" accept="image/*" capture="camera" onchange="handleFiles(this.files, '09')"/>
+              <hr>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <h4 class="lead heading">10. GRRRR! (45°)</h4>
+              <p>“How do you growl to scare off the biggest monster?”</p>
+              <img class="my-1" id="photoDisplay10" src="images/examplePhotos/examplePhoto10.png" alt="example photo #10" width="250px">
+              <input type="file" id="photoUpload10" accept="image/*" capture="camera" onchange="handleFiles(this.files, '10')"/>
+              <hr>
+              <div id="loggedInHide" class="my-3">
+                  <h5>Please log in to enable photo submission.</h5>
+              </div>
+              <button type="button" id="loginButton" class="btn btn-primary my-2">
+                Log In
+              </button>
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+
+      <!-- The surrounding HTML is left untouched by FirebaseUI.
+           Your app may use that space for branding, controls and other customizations.-->
+      <div id="firebaseui-auth-container"></div>
+
+      <div class="row outer-row text-center">
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+          <div class="col-xl-4 col-sm-6 col text-center">
+              <div id="loggedInShow" style="display: none;" >
+                  <h5>Successfully logged in!</h5>
+                  <p>Once you have input all of the photos you can submit them using the button below.</p>
+                  <hr>
+                  <p>Email: <span id="userEmail">User email</span></p>
+                  <p>Child's name: <input id="kidName" type="text" name="kidName" value=""></p>
+                  <button type="button" id="submitPhotos" class="btn btn-primary my-2" disabled=true>
+                    Submit Photos
+                  </button>
+              </div>
+
+          </div>
+          <div class="col-xl-4 col-sm-3 d-none d-sm-block">
+          </div>
+      </div>
+      <hr>
+      <footer class="container text-center">
+        <div class="row">
+          <div class="col">
+            <small class="d-block mb-2 text-muted">&copy; LifeStory Kids Books 2018</small>
+            <small class="d-block"><a href="mailto:jake@lifestorykidsbooks.com">jake@lifestorykidsbooks.com</a></small>
+            <small class="d-block"><a href="mailto:alison@lifestorykidsbooks.com">alison@lifestorykidsbooks.com</a></small>
+            <small class="d-block"><a href="mailto:sid@lifestorykidsbooks.com">sid@lifestorykidsbooks.com</a></small>
+        </div>
+      </footer>
+  </body>
+</html>

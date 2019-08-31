@@ -1,0 +1,46 @@
+.lead{
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.process-box {
+    border: 3px;
+    border-style: solid;
+    border-radius: 10px;
+    margin:10px;
+}
+
+.no-underline, .no-underline:hover{
+    text-decoration: none;
+}
+
+#about-signature{
+    font-family: 'Homemade Apple', cursive;
+    font-size:28px;
+    margin-left:20px;
+}
+
+/* A wrapper for your images to transition */
+.transition-wrapper {
+  position: relative;
+  left:0;
+  margin:0 auto;
+}
+
+/* Position each image and apply a transition */
+.transition-wrapper img {
+  position:absolute;
+  left:0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Automatically hide an image during hover (to reveal the other one) */
+.transition-wrapper img:last-of-type:hover {
+  opacity:0;
+}
